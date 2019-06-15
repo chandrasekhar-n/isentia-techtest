@@ -1,9 +1,16 @@
 const express = require('express');
 const https = require('https')
-const parseString = require('xml2js').parseString
+const xml2js = require('xml2js')
 const app = express();
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.route('/api/flickerFeed').get((req, res) => {
+    let images = [];
     https.get('https://api.flickr.com/services/feeds/photos_public.gne',(resp) =>{
         let data='';
         resp.on('data', (chunk) => {
@@ -15,14 +22,26 @@ app.route('/api/flickerFeed').get((req, res) => {
         });
 
         resp.on('end',() =>{
-            parseString(data, function (err, result) {
-                console.error(err);
-                res.send(result);
+            xml2js.parseString(data, function (err, result) {
+                if(err) {
+                    console.error(err);
+                }
+                const entries = result.feed.entry
+                for(let index in entries){
+                    const entry = entries[index]
+                    let image = {title:entry.title}
+                    const imagesrc = entry.link.filter( link => link.$.rel === 'enclosure')
+                    console.log(imagesrc)
+                    image.src= imagesrc[0].$.href;
+                    images.push(image);
+                }
+                console.log(images)
+                res.send(images);
             });
         });
     });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 app.listen(port,() => console.log(`Listening on port ${port} ....`));
