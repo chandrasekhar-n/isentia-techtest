@@ -1,4 +1,4 @@
-const server = require("../backend/server");
+const server = require("../server");
 const request = require('supertest');
 const assert = require('assert')
 
@@ -17,6 +17,14 @@ describe("Testing API method",() => {
     it('search with tags', function (done) {
         request(server)
             .get("/api/flickerFeed?tags=abcd")
+            .expect(function(res) {
+                assert.ok(res.length>0);
+            });
+            done();
+        });
+    it('search with tags', function (done) {
+        request(server)
+            .get("/api/flickerFeed?tags=abcd%20efgh")
             .expect(function(res) {
                 assert.ok(res.length>0);
             });

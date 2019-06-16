@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+const path = require("path");
+const https = require("https");
+const xml2js = require('xml2js');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -44,6 +47,9 @@ app.get('/api/flickerFeed',function(req, res) {
         });
     });
 });
+
+app.use(express.static(path.join(__dirname, 'dist/Isentia-techtest')));
+
 const port = process.env.PORT || 8080;
 
 app.listen(port,() => console.log(`Listening on port ${port} ....`));
