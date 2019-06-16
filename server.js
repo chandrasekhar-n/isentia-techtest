@@ -9,9 +9,16 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.route('/api/flickerFeed').get((req, res) => {
+app.get('/api/flickerFeed',function(req, res) {
+    let tags = req.param('tags');
+    console.log(tags);
+    let query_uri = 'https://api.flickr.com/services/feeds/photos_public.gne';
+    if (tags && tags!==''){
+        query_uri = query_uri+'?tags='+tags;
+    }
+
     let images = [];
-    https.get('https://api.flickr.com/services/feeds/photos_public.gne',(resp) =>{
+    https.get(query_uri,(resp) =>{
         let data='';
         resp.on('data', (chunk) => {
             data += chunk;
