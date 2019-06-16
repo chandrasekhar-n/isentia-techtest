@@ -1,6 +1,4 @@
 const express = require('express');
-const https = require('https')
-const xml2js = require('xml2js')
 const app = express();
 
 app.use(function(req, res, next) {
@@ -33,22 +31,21 @@ app.get('/api/flickerFeed',function(req, res) {
                 if(err) {
                     console.error(err);
                 }
-                const entries = result.feed.entry
+                const entries = result.feed.entry;
                 for(let index in entries){
-                    const entry = entries[index]
-                    let image = {title:entry.title}
-                    const imagesrc = entry.link.filter( link => link.$.rel === 'enclosure')
-                    console.log(imagesrc)
+                    const entry = entries[index];
+                    let image = {title:entry.title};
+                    const imagesrc = entry.link.filter( link => link.$.rel === 'enclosure');
                     image.src= imagesrc[0].$.href;
                     images.push(image);
                 }
-                console.log(images)
                 res.send(images);
             });
         });
     });
 });
-
 const port = process.env.PORT || 8080;
 
 app.listen(port,() => console.log(`Listening on port ${port} ....`));
+
+module.exports=app;
