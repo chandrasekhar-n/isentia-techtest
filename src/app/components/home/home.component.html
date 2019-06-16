@@ -1,0 +1,24 @@
+<div class="container">
+
+<form class="form search-form my-2 my-lg-0" [formGroup]="searchForm" (ngSubmit)="searchTags()">
+    <div class="input-group mb-3">
+        <input class="form-control" name="search" type="search" placeholder="Search Tags" formControlName="search" aria-label="Search">
+        <div class="input-group-append">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+
+  <hr class="mt-2 mb-5">
+
+  <div class="row text-center text-lg-left gallery">
+
+    <div *ngFor="let image of images" class="col-lg-3 col-md-4 col-6 overlay-image">
+      <a href="#" class="d-block mb-4 h-100">
+          <img class="image img-fluid img-thumbnail" [src]="image.src" [alt]="image.title">
+          <div class="hover">{{image.title}}</div>
+      </a>
+    </div>
+  </div>
+
+</div>

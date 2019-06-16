@@ -1,0 +1,17 @@
+.footer {
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+.stick-to-bottom{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.text-muted {
+    color: #868e96 !important;
+}
+
+.text-center {
+    text-align: center !important;
+}

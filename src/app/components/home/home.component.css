@@ -1,0 +1,21 @@
+.gallery{
+    padding-top:20px;
+}
+
+.overlay-image .hover {
+ position: absolute;
+ top: 0;
+ height: 100%;
+ width: 100%;
+ opacity: 0;
+ transition: .5s ease;
+}
+/* New overlay appearance on hover */
+.overlay-image:hover .hover {
+ opacity: 1;
+}
+
+.search-form{
+ padding-top: 30px;
+
+}
